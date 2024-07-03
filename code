@@ -1,0 +1,908 @@
+# importing all classes from the module
+from tkinter import *
+from tkinter import ttk
+
+import ctypes
+ctypes.windll.shcore.SetProcessDpiAwareness(True) #improving the display quality
+
+title_name = "Metric Converter"
+
+# preapring the window
+window = Tk()
+window.title(f"{title_name}") #--> change value
+window.minsize(width = 350, height=150)
+window.config(padx = 25, pady = 25)
+
+list_of_units = []
+
+#Listbox - base_entry
+def listbox_used(event):
+    # Gets current selection from listbox
+    a = base_entry.get(base_entry.curselection())
+    entry = Entry(width = 15)
+    entry.insert(END, string = a) # Initialising to 0
+    entry.grid(column = 2, row = 1)
+    list_of_units.append(a)
+    base_entry.destroy() #-->
+
+
+base_entry = Listbox(height=3)
+base_units = ["Miles", "Kilometres", "Yards", "Feet", "Inches", "Nautical Miles", "Metres", "Millimeters", "Centimeters", "Micrometers" ]
+for item in base_units:
+    base_entry.insert(base_units.index(item), item)
+base_entry.bind("<<ListboxSelect>>", listbox_used)
+base_entry.grid(column = 2, row = 2)
+
+
+# defining the first unit label:
+my_label_1 = Label(text = "", font = ("Times New Roman", 10))
+my_label_1.grid(column = 3, row = 1)
+# my_label.config(text = "New Label")
+
+
+gap = Label(text = "     ")
+gap.grid(column = 2, row =3)
+
+# defining the label:
+my_label_text = Label(text ="Convert to   ", font = ("Times New Roman", 10))
+my_label_text.grid(column = 0, row = 4)
+
+# for int(entry.get())
+#Listbox - base_entry
+def listbox_used(event):
+    # Gets current selection from listbox
+    b = target.get(target.curselection())
+    entry2 = Entry(width = 15)
+    entry2.insert(END, string = b) # Initialising to 0
+    entry2.grid(column = 2, row = 4)
+    list_of_units.append(b)
+    target.destroy() #-->
+
+
+scrollbar = ttk.Scrollbar(window, orient= VERTICAL)
+target = Listbox(height=3)
+target_unit = ["Miles", "Kilometres", "Yards", "Feet", "Inches", "Nautical Miles", "Metres", "Millimeters", "Centimeters", "Micrometers" ]
+scrollbar.config(command=target.yview)
+for item in target_unit:
+    target.insert(target_unit.index(item), item)
+target.bind("<<ListboxSelect>>", listbox_used)
+target.grid(column = 2, row = 5)
+
+
+
+# defining the second unit label:
+my_label_2 = Label(text ="", font = ("Times New Roman", 10))
+my_label_2.grid(column = 3, row = 3)
+
+
+gap = Label(text = "     ")
+gap.grid(column = 2, row =6)
+
+def execute():
+    for widget in window.winfo_children():
+        widget.destroy()
+
+
+    unit_1 = list_of_units[0]
+    unit_2 = list_of_units[1]
+    window.title(f"{unit_1} to {unit_2}")
+
+    # Taking input-1
+    entry = Entry(width = 15)
+    entry.insert(END, string = 0) # Initialising to 0
+    entry.grid(column = 2, row = 1)
+
+    # defining the label:
+    my_label_1 = Label(text = unit_1, font = ("Times New Roman", 10))
+    my_label_1.grid(column = 3, row = 1)
+    # my_label.config(text = "New Label")
+
+
+    # defining the label:
+    my_label_text = Label(text ="is equal to", font = ("Times New Roman", 10))
+    my_label_text.grid(column = 0, row = 3)
+
+    
+    #to_convert = int(entry.get()) ###
+    
+
+    def miles_to_kms():
+        
+        output = int(entry.get())*1.609
+        Output.config(text = output)
+
+    def kms_to_miles():
+        output = round(int(entry.get())/ 1.609, 4)
+        Output.config(text = output)
+
+    def yards_to_feet():
+        output = round(int(entry.get()) * 3, 4)
+        Output.config(text=output)
+
+    def feet_to_yards():
+        output = round(int(entry.get()) / 3, 4)
+        Output.config(text=output)
+
+    def yards_to_inches():
+        output = round(int(entry.get()) * 36, 4)
+        Output.config(text=output)
+
+    def inches_to_yards():
+        output = round(int(entry.get()) / 36, 4)
+        Output.config(text=output)
+
+    def feet_to_inches():
+        output = round(int(entry.get()) * 12, 4)
+        Output.config(text=output)
+
+    def inches_to_feet():
+        output = round(int(entry.get()) / 12, 4)
+        Output.config(text=output)
+
+    def kms_to_meters():
+        output = round(int(entry.get()) * 1000, 4)
+        Output.config(text=output)
+
+    def meters_to_kms():
+        output = round(int(entry.get()) / 1000, 4)
+        Output.config(text=output)
+
+    def meters_to_miles():
+        output = round(int(entry.get()) / 1609.344, 4)
+        Output.config(text=output)
+
+    def miles_to_meters():
+        output = round(int(entry.get()) * 1609.344, 4)
+        Output.config(text=output)
+
+    def kms_to_yards():
+        output = round(int(entry.get()) * 1093.6133, 4)
+        Output.config(text=output)
+
+    def yards_to_kms():
+        output = round(int(entry.get()) / 1093.6133, 4)
+        Output.config(text=output)
+
+    def meters_to_yards():
+        output = round(int(entry.get()) * 1.0936133, 4)
+        Output.config(text=output)
+
+    def yards_to_meters():
+        output = round(int(entry.get()) / 1.0936133, 4)
+        Output.config(text=output)
+
+    def feet_to_meters():
+        output = round(int(entry.get()) * 0.3048, 4)
+        Output.config(text=output)
+
+    def meters_to_feet():
+        output = round(int(entry.get()) / 0.3048, 4)
+        Output.config(text=output)
+
+    def inches_to_meters():
+        output = round(int(entry.get()) * 0.0254, 4)
+        Output.config(text=output)
+
+    def meters_to_inches():
+        output = round(int(entry.get()) / 0.0254, 4)
+        Output.config(text=output)
+
+    def feet_to_kms():
+        output = round(int(entry.get()) * 0.0003048, 4)
+        Output.config(text=output)
+
+    def kms_to_feet():
+        output = round(int(entry.get()) / 0.0003048, 4)
+        Output.config(text=output)
+
+    def inches_to_kms():
+        output = round(int(entry.get()) * 0.0000254, 4)
+        Output.config(text=output)
+
+    def kms_to_inches():
+        output = round(int(entry.get()) / 0.0000254, 4)
+        Output.config(text=output)
+
+    def feet_to_miles():
+        output = round(int(entry.get()) / 5280, 4)
+        Output.config(text=output)
+
+    def miles_to_feet():
+        output = round(int(entry.get()) * 5280, 4)
+        Output.config(text=output)
+
+    def inches_to_miles():
+        output = round(int(entry.get()) / 63360, 4)
+        Output.config(text=output)
+
+    def miles_to_inches():
+        output = round(int(entry.get()) * 63360, 4)
+        Output.config(text=output)
+
+    def miles_to_yards():
+        output = round(int(entry.get()) * 1760, 4)
+        Output.config(text=output)
+
+    def yards_to_miles():
+        output = round(int(entry.get()) / 1760, 4)
+        Output.config(text=output)
+    
+    def nautical_miles_to_kms():
+        output = round(int(entry.get()) * 1.852, 4)
+        Output.config(text=output)
+
+    def kms_to_nautical_miles():
+        output = round(int(entry.get()) / 1.852, 4)
+        Output.config(text=output)
+
+    def nautical_miles_to_miles():
+        output = round(int(entry.get()) * 1.15078, 4)
+        Output.config(text=output)
+
+    def miles_to_nautical_miles():
+        output = round(int(entry.get()) / 1.15078, 4)
+        Output.config(text=output)
+
+    def nautical_miles_to_meters():
+        output = round(int(entry.get()) * 1852, 4)
+        Output.config(text=output)
+
+    def meters_to_nautical_miles():
+        output = round(int(entry.get()) / 1852, 4)
+        Output.config(text=output)
+
+    def nautical_miles_to_yards():
+        output = round(int(entry.get()) * 2025.3718, 4)
+        Output.config(text=output)
+
+    def yards_to_nautical_miles():
+        output = round(int(entry.get()) / 2025.3718, 4)
+        Output.config(text=output)
+
+    def nautical_miles_to_feet():
+        output = round(int(entry.get()) * 6076.1155, 4)
+        Output.config(text=output)
+
+    def feet_to_nautical_miles():
+        output = round(int(entry.get()) / 6076.1155, 4)
+        Output.config(text=output)
+
+    def nautical_miles_to_inches():
+        output = round(int(entry.get()) * 72913.3858, 4)
+        Output.config(text=output)
+
+    def inches_to_nautical_miles():
+        output = round(int(entry.get()) / 72913.3858, 4)
+        Output.config(text=output)
+
+    def millimeters_to_kms():
+        output = round(int(entry.get()) / 1000000, 4)
+        Output.config(text=output)
+
+    def kms_to_millimeters():
+        output = round(int(entry.get()) * 1000000, 4)
+        Output.config(text=output)
+
+    def millimeters_to_miles():
+        output = round(int(entry.get()) / 1609344, 4)
+        Output.config(text=output)
+
+    def miles_to_millimeters():
+        output = round(int(entry.get()) * 1609344, 4)
+        Output.config(text=output)
+
+    def millimeters_to_meters():
+        output = round(int(entry.get()) / 1000, 4)
+        Output.config(text=output)
+
+    def meters_to_millimeters():
+        output = round(int(entry.get()) * 1000, 4)
+        Output.config(text=output)
+
+    def millimeters_to_yards():
+        output = round(int(entry.get()) / 914.4, 4)
+        Output.config(text=output)
+
+    def yards_to_millimeters():
+        output = round(int(entry.get()) * 914.4, 4)
+        Output.config(text=output)
+
+    def millimeters_to_feet():
+        output = round(int(entry.get()) / 304.8, 4)
+        Output.config(text=output)
+
+    def feet_to_millimeters():
+        output = round(int(entry.get()) * 304.8, 4)
+        Output.config(text=output)
+
+    def millimeters_to_inches():
+        output = round(int(entry.get()) / 25.4, 4)
+        Output.config(text=output)
+
+    def inches_to_millimeters():
+        output = round(int(entry.get()) * 25.4, 4)
+        Output.config(text=output)
+
+    def millimeters_to_centimeters():
+        output = round(int(entry.get()) / 10, 4)
+        Output.config(text=output)
+
+    def centimeters_to_millimeters():
+        output = round(int(entry.get()) * 10, 4)
+        Output.config(text=output)
+
+    def centimeters_to_kms():
+        output = round(int(entry.get()) / 100000, 4)
+        Output.config(text=output)
+
+    def kms_to_centimeters():
+        output = round(int(entry.get()) * 100000, 4)
+        Output.config(text=output)
+
+    def centimeters_to_miles():
+        output = round(int(entry.get()) / 160934.4, 4)
+        Output.config(text=output)
+
+    def miles_to_centimeters():
+        output = round(int(entry.get()) * 160934.4, 4)
+        Output.config(text=output)
+
+    def centimeters_to_meters():
+        output = round(int(entry.get()) / 100, 4)
+        Output.config(text=output)
+
+    def meters_to_centimeters():
+        output = round(int(entry.get()) * 100, 4)
+        Output.config(text=output)
+
+    def centimeters_to_yards():
+        output = round(int(entry.get()) / 91.44, 4)
+        Output.config(text=output)
+
+    def yards_to_centimeters():
+        output = round(int(entry.get()) * 91.44, 4)
+        Output.config(text=output)
+
+    def centimeters_to_feet():
+        output = round(int(entry.get()) / 30.48, 4)
+        Output.config(text=output)
+
+    def feet_to_centimeters():
+        output = round(int(entry.get()) * 30.48, 4)
+        Output.config(text=output)
+
+    def centimeters_to_inches():
+        output = round(int(entry.get()) / 2.54, 4)
+        Output.config(text=output)
+
+    def inches_to_centimeters():
+        output = round(int(entry.get()) * 2.54, 4)
+        Output.config(text=output)
+
+    def micrometers_to_kms():
+        output = round(int(entry.get()) / 1e9, 4)
+        Output.config(text=output)
+
+    def kms_to_micrometers():
+        output = round(int(entry.get()) * 1e9, 4)
+        Output.config(text=output)
+
+    def micrometers_to_miles():
+        output = round(int(entry.get()) / 1.609e9, 4)
+        Output.config(text=output)
+
+    def miles_to_micrometers():
+        output = round(int(entry.get()) * 1.609e9, 4)
+        Output.config(text=output)
+
+    def micrometers_to_meters():
+        output = round(int(entry.get()) / 1e6, 4)
+        Output.config(text=output)
+
+    def meters_to_micrometers():
+        output = round(int(entry.get()) * 1e6, 4)
+        Output.config(text=output)
+
+    def micrometers_to_yards():
+        output = round(int(entry.get()) / 914400, 4)
+        Output.config(text=output)
+
+    def yards_to_micrometers():
+        output = round(int(entry.get()) * 914400, 4)
+        Output.config(text=output)
+
+    def micrometers_to_feet():
+        output = round(int(entry.get()) / 304800, 4)
+        Output.config(text=output)
+
+    def feet_to_micrometers():
+        output = round(int(entry.get()) * 304800, 4)
+        Output.config(text=output)
+
+    def micrometers_to_inches():
+        output = round(int(entry.get()) / 25400, 4)
+        Output.config(text=output)
+
+    def inches_to_micrometers():
+        output = round(int(entry.get()) * 25400, 4)
+        Output.config(text=output)
+
+    def micrometers_to_centimeters():
+        output = round(int(entry.get()) / 10000, 4)
+        Output.config(text=output)
+
+    def centimeters_to_micrometers():
+        output = round(int(entry.get()) * 10000, 4)
+        Output.config(text=output)
+
+    def micrometers_to_millimeters():
+        output = round(int(entry.get()) / 1000, 4)
+        Output.config(text=output)
+
+    def millimeters_to_micrometers():
+        output = round(int(entry.get()) * 1000, 4)
+        Output.config(text=output)
+
+    def nanometers_to_kms():
+        output = round(int(entry.get()) / 1e12, 4)
+        Output.config(text=output)
+
+    def kms_to_nanometers():
+        output = round(int(entry.get()) * 1e12, 4)
+        Output.config(text=output)
+
+    def nanometers_to_miles():
+        output = round(int(entry.get()) / 1.609e12, 4)
+        Output.config(text=output)
+
+    def miles_to_nanometers():
+        output = round(int(entry.get()) * 1.609e12, 4)
+        Output.config(text=output)
+
+    def nanometers_to_meters():
+        output = round(int(entry.get()) / 1e9, 4)
+        Output.config(text=output)
+
+    def meters_to_nanometers():
+        output = round(int(entry.get()) * 1e9, 4)
+        Output.config(text=output)
+
+    def nanometers_to_yards():
+        output = round(int(entry.get()) / 9.144e8, 4)
+        Output.config(text=output)
+
+    def yards_to_nanometers():
+        output = round(int(entry.get()) * 9.144e8, 4)
+        Output.config(text=output)
+
+    def nanometers_to_feet():
+        output = round(int(entry.get()) / 3.048e8, 4)
+        Output.config(text=output)
+
+    def feet_to_nanometers():
+        output = round(int(entry.get()) * 3.048e8, 4)
+        Output.config(text=output)
+
+    def nanometers_to_inches():
+        output = round(int(entry.get()) / 2.54e7, 4)
+        Output.config(text=output)
+
+    def inches_to_nanometers():
+        output = round(int(entry.get()) * 2.54e7, 4)
+        Output.config(text=output)
+
+    def nanometers_to_centimeters():
+        output = round(int(entry.get()) / 1e7, 4)
+        Output.config(text=output)
+
+    def centimeters_to_nanometers():
+        output = round(int(entry.get()) * 1e7, 4)
+        Output.config(text=output)
+
+    def nanometers_to_millimeters():
+        output = round(int(entry.get()) / 1e6, 4)
+        Output.config(text=output)
+
+    def millimeters_to_nanometers():
+        output = round(int(entry.get()) * 1e6, 4)
+        Output.config(text=output)
+
+    def nanometers_to_micrometers():
+        output = round(int(entry.get()) / 1000, 4)
+        Output.config(text=output)
+
+    def micrometers_to_nanometers():
+        output = round(int(entry.get()) * 1000, 4)
+        Output.config(text=output)
+
+    
+    # Giving Output
+    Output = Label(text = 0)
+    Output.grid(column = 2, row = 3)
+
+    # defining the label:
+    my_label_2 = Label(text = unit_2, font = ("Times New Roman", 10))
+    my_label_2.grid(column = 3, row = 3)
+ 
+    if unit_1 == "Kilometres" and unit_2 == "Miles":
+        button = Button(text="Convert", command = kms_to_miles)
+        button.grid(column = 2, row = 5)
+        
+    elif unit_2 == "Kilometres" and unit_1 == "Miles":
+        button = Button(text="Convert", command = miles_to_kms)
+        button.grid(column = 2, row = 5)
+
+    elif unit_1 == "Yards" and unit_2 == "Feet":
+        button = Button(text="Convert", command=yards_to_feet)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Feet" and unit_2 == "Yards":
+        button = Button(text="Convert", command=feet_to_yards)
+        button.grid(column=2, row=5)
+    
+    elif unit_1 == "Yards" and unit_2 == "Inches":
+        button = Button(text="Convert", command=yards_to_inches)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Inches" and unit_2 == "Yards":
+        button = Button(text="Convert", command=inches_to_yards)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Feet" and unit_2 == "Inches":
+        button = Button(text="Convert", command=feet_to_inches)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Inches" and unit_2 == "Feet":
+        button = Button(text="Convert", command=inches_to_feet)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Kilometres" and unit_2 == "Meters":
+        button = Button(text="Convert", command=kms_to_meters)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Meters" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=meters_to_kms)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Meters" and unit_2 == "Miles":
+        button = Button(text="Convert", command=meters_to_miles)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Miles" and unit_2 == "Meters":
+        button = Button(text="Convert", command=miles_to_meters)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Kilometres" and unit_2 == "Yards":
+        button = Button(text="Convert", command=kms_to_yards)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Yards" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=yards_to_kms)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Meters" and unit_2 == "Yards":
+        button = Button(text="Convert", command=meters_to_yards)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Yards" and unit_2 == "Meters":
+        button = Button(text="Convert", command=yards_to_meters)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Feet" and unit_2 == "Meters":
+        button = Button(text="Convert", command=feet_to_meters)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Meters" and unit_2 == "Feet":
+        button = Button(text="Convert", command=meters_to_feet)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Inches" and unit_2 == "Meters":
+        button = Button(text="Convert", command=inches_to_meters)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Meters" and unit_2 == "Inches":
+        button = Button(text="Convert", command=meters_to_inches)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Feet" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=feet_to_kms)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Kilometres" and unit_2 == "Feet":
+        button = Button(text="Convert", command=kms_to_feet)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Inches" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=inches_to_kms)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Kilometres" and unit_2 == "Inches":
+        button = Button(text="Convert", command=kms_to_inches)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Feet" and unit_2 == "Miles":
+        button = Button(text="Convert", command=feet_to_miles)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Miles" and unit_2 == "Feet":
+        button = Button(text="Convert", command=miles_to_feet)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Inches" and unit_2 == "Miles":
+        button = Button(text="Convert", command=inches_to_miles)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Miles" and unit_2 == "Inches":
+        button = Button(text="Convert", command=miles_to_inches)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Miles" and unit_2 == "Yards":
+        button = Button(text="Convert", command=miles_to_yards)
+        button.grid(column=2, row=5)
+    elif unit_1 == "Yards" and unit_2 == "Miles":
+        button = Button(text="Convert", command=yards_to_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nautical Miles" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=nautical_miles_to_kms)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nautical Miles" and unit_1 == "Kilometres":
+        button = Button(text="Convert", command=kms_to_nautical_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nautical Miles" and unit_2 == "Miles":
+        button = Button(text="Convert", command=nautical_miles_to_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nautical Miles" and unit_1 == "Miles":
+        button = Button(text="Convert", command=miles_to_nautical_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nautical Miles" and unit_2 == "Meters":
+        button = Button(text="Convert", command=nautical_miles_to_meters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nautical Miles" and unit_1 == "Meters":
+        button = Button(text="Convert", command=meters_to_nautical_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nautical Miles" and unit_2 == "Yards":
+        button = Button(text="Convert", command=nautical_miles_to_yards)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nautical Miles" and unit_1 == "Yards":
+        button = Button(text="Convert", command=yards_to_nautical_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nautical Miles" and unit_2 == "Feet":
+        button = Button(text="Convert", command=nautical_miles_to_feet)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nautical Miles" and unit_1 == "Feet":
+        button = Button(text="Convert", command=feet_to_nautical_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nautical Miles" and unit_2 == "Inches":
+        button = Button(text="Convert", command=nautical_miles_to_inches)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nautical Miles" and unit_1 == "Inches":
+        button = Button(text="Convert", command=inches_to_nautical_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Millimeters" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=millimeters_to_kms)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Millimeters" and unit_1 == "Kilometres":
+        button = Button(text="Convert", command=kms_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Millimeters" and unit_2 == "Miles":
+        button = Button(text="Convert", command=millimeters_to_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Millimeters" and unit_1 == "Miles":
+        button = Button(text="Convert", command=miles_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Millimeters" and unit_2 == "Meters":
+        button = Button(text="Convert", command=millimeters_to_meters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Millimeters" and unit_1 == "Meters":
+        button = Button(text="Convert", command=meters_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Millimeters" and unit_2 == "Yards":
+        button = Button(text="Convert", command=millimeters_to_yards)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Millimeters" and unit_1 == "Yards":
+        button = Button(text="Convert", command=yards_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Millimeters" and unit_2 == "Feet":
+        button = Button(text="Convert", command=millimeters_to_feet)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Millimeters" and unit_1 == "Feet":
+        button = Button(text="Convert", command=feet_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Millimeters" and unit_2 == "Inches":
+        button = Button(text="Convert", command=millimeters_to_inches)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Millimeters" and unit_1 == "Inches":
+        button = Button(text="Convert", command=inches_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Millimeters" and unit_2 == "Centimeters":
+        button = Button(text="Convert", command=millimeters_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Millimeters" and unit_1 == "Centimeters":
+        button = Button(text="Convert", command=centimeters_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Centimeters" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=centimeters_to_kms)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Centimeters" and unit_1 == "Kilometres":
+        button = Button(text="Convert", command=kms_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Centimeters" and unit_2 == "Miles":
+        button = Button(text="Convert", command=centimeters_to_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Centimeters" and unit_1 == "Miles":
+        button = Button(text="Convert", command=miles_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Centimeters" and unit_2 == "Meters":
+        button = Button(text="Convert", command=centimeters_to_meters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Centimeters" and unit_1 == "Meters":
+        button = Button(text="Convert", command=meters_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Centimeters" and unit_2 == "Yards":
+        button = Button(text="Convert", command=centimeters_to_yards)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Centimeters" and unit_1 == "Yards":
+        button = Button(text="Convert", command=yards_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Centimeters" and unit_2 == "Feet":
+        button = Button(text="Convert", command=centimeters_to_feet)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Centimeters" and unit_1 == "Feet":
+        button = Button(text="Convert", command=feet_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Centimeters" and unit_2 == "Inches":
+        button = Button(text="Convert", command=centimeters_to_inches)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Centimeters" and unit_1 == "Inches":
+        button = Button(text="Convert", command=inches_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Micrometers" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=micrometers_to_kms)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Micrometers" and unit_1 == "Kilometres":
+        button = Button(text="Convert", command=kms_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Micrometers" and unit_2 == "Miles":
+        button = Button(text="Convert", command=micrometers_to_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Micrometers" and unit_1 == "Miles":
+        button = Button(text="Convert", command=miles_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Micrometers" and unit_2 == "Meters":
+        button = Button(text="Convert", command=micrometers_to_meters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Micrometers" and unit_1 == "Meters":
+        button = Button(text="Convert", command=meters_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Micrometers" and unit_2 == "Yards":
+        button = Button(text="Convert", command=micrometers_to_yards)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Micrometers" and unit_1 == "Yards":
+        button = Button(text="Convert", command=yards_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Micrometers" and unit_2 == "Feet":
+        button = Button(text="Convert", command=micrometers_to_feet)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Micrometers" and unit_1 == "Feet":
+        button = Button(text="Convert", command=feet_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Micrometers" and unit_2 == "Inches":
+        button = Button(text="Convert", command=micrometers_to_inches)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Micrometers" and unit_1 == "Inches":
+        button = Button(text="Convert", command=inches_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Micrometers" and unit_2 == "Centimeters":
+        button = Button(text="Convert", command=micrometers_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Micrometers" and unit_1 == "Centimeters":
+        button = Button(text="Convert", command=centimeters_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Kilometres":
+        button = Button(text="Convert", command=nanometers_to_kms)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Kilometres":
+        button = Button(text="Convert", command=kms_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Miles":
+        button = Button(text="Convert", command=nanometers_to_miles)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Miles":
+        button = Button(text="Convert", command=miles_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Meters":
+        button = Button(text="Convert", command=nanometers_to_meters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Meters":
+        button = Button(text="Convert", command=meters_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Yards":
+        button = Button(text="Convert", command=nanometers_to_yards)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Yards":
+        button = Button(text="Convert", command=yards_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Feet":
+        button = Button(text="Convert", command=nanometers_to_feet)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Feet":
+        button = Button(text="Convert", command=feet_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Inches":
+        button = Button(text="Convert", command=nanometers_to_inches)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Inches":
+        button = Button(text="Convert", command=inches_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Centimeters":
+        button = Button(text="Convert", command=nanometers_to_centimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Centimeters":
+        button = Button(text="Convert", command=centimeters_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Millimeters":
+        button = Button(text="Convert", command=nanometers_to_millimeters)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Millimeters":
+        button = Button(text="Convert", command=millimeters_to_nanometers)
+        button.grid(column=2, row=5)
+
+    elif unit_1 == "Nanometers" and unit_2 == "Micrometers":
+        button = Button(text="Convert", command=nanometers_to_micrometers)
+        button.grid(column=2, row=5)
+
+    elif unit_2 == "Nanometers" and unit_1 == "Micrometers":
+        button = Button(text="Convert", command=micrometers_to_nanometers)
+        button.grid(column=2, row=5)
+        
+    #button
+button = Button(text="Choose", command = execute)
+button.grid(column = 2, row = 7)
+
+
+
+window.mainloop()
